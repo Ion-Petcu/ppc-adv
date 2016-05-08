@@ -5,7 +5,7 @@ import time
 def main(test_no):
     m1_file = 'data/t_' + str(test_no) + '_m1.in'
     m2_file = 'data/t_' + str(test_no) + '_m2.in'
-    out_file = 'data/s_' + str(test_no) + '.out'
+    out_file = 'data/p_' + str(test_no) + '.out'
 
     start = time.time()
     # computation
