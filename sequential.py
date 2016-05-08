@@ -1,6 +1,26 @@
+import numpy as np
 import sys
-from backend import Matrix, read_rows_cols, prod
-from time import time
+import time
+
+
+def read(path):
+    fp = open(path, 'r')
+    m = []
+    for i, line in enumerate(fp):
+        if i == 0:
+            continue
+        m.append(map(int, line.strip('\n').split(' ')))
+    fp.close()
+    return np.array(m)
+
+
+def write(m, path):
+    rows, cols = m.shape
+    fp = open(path, 'w')
+    fp.write(str(rows) + ' ' + str(cols) + '\n')
+    for i in xrange(rows):
+        fp.write(' '.join(map(str, m[i])) + '\n')
+    fp.close()
 
 
 def main(test_no):
@@ -8,25 +28,22 @@ def main(test_no):
     m2_file = 'data/t_' + str(test_no) + '_m2.in'
     out_file = 'data/s_' + str(test_no) + '.out'
 
-    r1, c1 = read_rows_cols(m1_file)
-    r2, c2 = read_rows_cols(m2_file)
-    m1 = Matrix(1, r1, 1, c1)
-    m2 = Matrix(1, r2, 1, c2)
-    m1.read(m1_file)
-    m2.read(m2_file)
-    p = prod(m1, m2)
-    p.write(out_file)
+    a = read(m1_file)
+    b = read(m2_file)
+
+    start = time.time()
+    c = np.dot(a, b)
+    end = time.time()
+
+    write(c, out_file)
+    return round(end - start, 4)
 
 
 if __name__ == '__main__':
-    start = time()
-
     try:
         test_no = int(sys.argv[1])
     except:
         print 'No test number provided. Default is 0.'
         test_no = 0
-    main(test_no)
-
-    end = time()
-    print 'Done! It took ' + str(round(end - start, 4)) + ' seconds.'
+    seconds = main(test_no)
+    print 'Done! It took ' + str(seconds) + ' seconds.'
