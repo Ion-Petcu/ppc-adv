@@ -2,21 +2,16 @@ import random
 
 
 def generate_tests():
-    tests = 8
-    min_dim = [1, 10, 100, 1000, 2000, 3000, 4000, 5000]
-    max_dim = [10, 100, 1000, 2000, 3000, 4000, 5000, 6000]
-    for t in xrange(tests):
-        generate_test(t, min_dim[t], max_dim[t])
+    ns = [10, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000]
+    for t, n in enumerate(ns):
+        generate_test(t, n)
 
 
-def generate_test(test, min_dim, max_dim):
+def generate_test(test, n):
     m1_file = 'data/t_' + str(test) + '_m1.in'
     m2_file = 'data/t_' + str(test) + '_m2.in'
-    n = random.randint(min_dim, max_dim)
-    m = random.randint(min_dim, max_dim)
-    p = random.randint(min_dim, max_dim)
-    generate_to_file(m1_file, n, m)
-    generate_to_file(m2_file, m, p)
+    generate_to_file(m1_file, n, n)
+    generate_to_file(m2_file, n, n)
 
 
 def generate_to_file(path, n, m):
