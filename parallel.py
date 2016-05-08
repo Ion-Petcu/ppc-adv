@@ -1,18 +1,14 @@
 import sys
 
 from backend import Matrix, read_rows_cols
-from multiprocessing import Pool
+from multiprocessing import Pool, cpu_count
 from time import time
 
-MAX_DIM = 100
+CPUS = cpu_count()
 
 
 def parallel_prod(A, B):
-    assert (A.cols == B.rows)
-    As = A.split(MAX_DIM)
-    Bs = B.split(MAX_DIM)
-    P = [[None] * len(Bs[0])] * len(As)
-    return P
+    return None
 
 
 def main(test_no):
