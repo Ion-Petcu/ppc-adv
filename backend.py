@@ -4,9 +4,11 @@ from multiprocessing import Array
 
 class SharedMatrix(object):
 
-    def __init__(self, n, m, shared_array):
+    def __init__(self, n, m, shared_array=None):
         self.rows = n
         self.cols = m
+        if not shared_array:
+            shared_array = Array('l', n * m)
         self.shared_array = shared_array
         self.data = np.frombuffer(shared_array.get_obj(), dtype=int).reshape((n, m))
 

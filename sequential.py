@@ -31,8 +31,14 @@ def main(test_no):
     a = read(m1_file)
     b = read(m2_file)
 
+    # c = np.zeros((a.shape[0], b.shape[1]))
     start = time.time()
     c = np.dot(a, b)
+
+    # for row in xrange(a.shape[0]):
+    #     for col in xrange(b.shape[1]):
+    #         c[row, col] = sum(a[row] * b[:, col])
+
     end = time.time()
 
     write(c, out_file)
