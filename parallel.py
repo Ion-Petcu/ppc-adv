@@ -5,6 +5,8 @@ from multiprocessing import Process, cpu_count
 import numpy as np
 from backend import SharedMatrix
 
+WITH_NP = False
+
 def compute(workers_num, proc_index,
             m1_rows, m1_cols, m1_buffer,
             m2_rows, m2_cols, m2_buffer,
@@ -12,13 +14,15 @@ def compute(workers_num, proc_index,
     m1 = SharedMatrix(m1_rows, m1_cols, m1_buffer)
     m2 = SharedMatrix(m2_rows, m2_cols, m2_buffer)
     c = SharedMatrix(c_rows, c_cols, c_buffer)
-    c.data[xrange(proc_index, c.rows, workers_num)] = np.dot(
-        m1.data[xrange(proc_index, c.rows, workers_num)],
-        m2.data)
-    # for out_line in xrange(proc_index, c.rows, workers_num):
-    #     c.data[out_line] = np.dot(m1.data[out_line], m2.data)
-        # for out_col in xrange(c.cols):
-        #     c.data[out_line, out_col] = sum(m1.data[out_line] * m2.data[:, out_col])
+    if WITH_NP:
+        c.data[xrange(proc_index, c.rows, workers_num)] = np.dot(
+            m1.data[xrange(proc_index, c.rows, workers_num)],
+            m2.data)
+    else:
+        for out_line in xrange(proc_index, c.rows, workers_num):
+            # c.data[out_line] = np.dot(m1.data[out_line], m2.data)
+            for out_col in xrange(c.cols):
+                c.data[out_line, out_col] = sum(m1.data[out_line] * m2.data[:, out_col])
 
 
 def main(test_no, parallelism):

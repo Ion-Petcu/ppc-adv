@@ -3,6 +3,7 @@ import sys
 import time
 from timeit import default_timer as timer
 
+WITH_NP = False
 
 def read(path):
     fp = open(path, 'r')
@@ -33,12 +34,16 @@ def main(test_no):
     b = read(m2_file)
 
     # c = np.zeros((a.shape[0], b.shape[1]))
-    start = timer()
-    c = np.dot(a, b)
+    if WITH_NP:
+        start = timer()
+        c = np.dot(a, b)
 
-    # for row in xrange(a.shape[0]):
-    #     for col in xrange(b.shape[1]):
-    #         c[row, col] = sum(a[row] * b[:, col])
+    else:
+        c = np.zeros((a.shape[0], b.shape[1]), dtype=int)
+        start = timer()
+        for row in xrange(a.shape[0]):
+            for col in xrange(b.shape[1]):
+                c[row, col] = sum(a[row] * b[:, col])
 
     end = timer()
 
