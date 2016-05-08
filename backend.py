@@ -8,9 +8,9 @@ class SharedMatrix(object):
         self.rows = n
         self.cols = m
         if not shared_array:
-            shared_array = Array('l', n * m)
+            shared_array = Array('l', n * m, lock=False)
         self.shared_array = shared_array
-        self.data = np.frombuffer(shared_array.get_obj(), dtype=int).reshape((n, m))
+        self.data = np.frombuffer(shared_array, dtype=int).reshape((n, m))
 
     @property
     def params(self):
@@ -24,7 +24,7 @@ class SharedMatrix(object):
         for i, line in enumerate(fp):
             if i == 0:
                 n, m = map(int, line.strip('\n').split(' '))
-                shared_array = Array('l', n * m)
+                shared_array = Array('l', n * m, lock=False)
                 continue
             shared_array[(i - 1) * m: i * m] = map(int, line.strip('\n').split(' '))
         fp.close()

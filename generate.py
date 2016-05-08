@@ -2,7 +2,7 @@ import random
 
 
 def generate_tests():
-    tests = 4
+    tests = 8
     min_dim = [1, 10, 100, 1000, 2000, 3000, 4000, 5000]
     max_dim = [10, 100, 1000, 2000, 3000, 4000, 5000, 6000]
     for t in xrange(tests):

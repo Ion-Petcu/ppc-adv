@@ -1,6 +1,7 @@
 import numpy as np
 import sys
 import time
+from timeit import default_timer as timer
 
 
 def read(path):
@@ -32,14 +33,14 @@ def main(test_no):
     b = read(m2_file)
 
     # c = np.zeros((a.shape[0], b.shape[1]))
-    start = time.time()
+    start = timer()
     c = np.dot(a, b)
 
     # for row in xrange(a.shape[0]):
     #     for col in xrange(b.shape[1]):
     #         c[row, col] = sum(a[row] * b[:, col])
 
-    end = time.time()
+    end = timer()
 
     write(c, out_file)
     return round(end - start, 4)
